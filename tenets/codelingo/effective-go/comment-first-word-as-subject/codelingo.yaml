@@ -17,11 +17,18 @@ tenets:
           The first sentence should be a one-sentence summary that starts with the name being declared.
       codelingo/review:
         comment: |
+<<<<<<< HEAD
           The first sentence should be a one-sentence summary that starts with the name ({{funcName}}) being declared.
     query: |
       import codelingo/ast/go
 
       # Only look at exported functions
+=======
+          The first sentence should be a one-sentence summary that starts with the name `{{funcName}}` being declared.
+    query: |
+      import codelingo/ast/go
+
+>>>>>>> d220f90d19daef602afee3448fc4a0f8e0f61608
       go.func_decl(depth = any):
         go.comment_group:
           @review comment
@@ -30,5 +37,8 @@ tenets:
             text as commText
         go.ident:
           name as funcName
+<<<<<<< HEAD
           public == "true"
+=======
+>>>>>>> d220f90d19daef602afee3448fc4a0f8e0f61608
           isValid(commText, funcName)

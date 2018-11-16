@@ -1,5 +1,6 @@
 [
   {
+<<<<<<< HEAD
    "Comment": "The first sentence should be a one-sentence summary that starts with the name (baz) being declared.\n",
    "Filename": "example.go",
    "Line": 21,
@@ -10,5 +11,11 @@
    "Filename": "example.go",
    "Line": 17,
    "Snippet": "func foo() {}\n\n/* This func comment should begin with 'bar'\n */\nfunc bar() {}\n"
+=======
+   "Comment": "The first sentence should be a one-sentence summary that starts with the name (bar) being declared.\n",
+   "Filename": "effective-go/comment-first-word-as-subject/example.go",
+   "Line": 16,
+   "Snippet": "func foo() {}\n\n/* This func comment should begin with 'bar'\n*/\nfunc bar() {}"
+>>>>>>> d220f90d19daef602afee3448fc4a0f8e0f61608
   }
  ]

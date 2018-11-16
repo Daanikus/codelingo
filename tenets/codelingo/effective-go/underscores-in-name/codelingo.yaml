@@ -8,6 +8,12 @@ funcs:
 tenets:
   - name: underscores-in-name
     flows:
+<<<<<<< HEAD
+=======
+      codelingo/docs:
+        title: Underscores in Name
+        body: The convention in Go is to use PascalCase or camelCase rather than underscores to write multiword names.
+>>>>>>> d220f90d19daef602afee3448fc4a0f8e0f61608
       codelingo/review:
         comment: The convention in Go is to use PascalCase or camelCase rather than underscores to write multiword names.
     query: |

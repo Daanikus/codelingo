@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // Package main used for testing the tenet
+=======
+>>>>>>> d220f90d19daef602afee3448fc4a0f8e0f61608
 package main
 
 import (
