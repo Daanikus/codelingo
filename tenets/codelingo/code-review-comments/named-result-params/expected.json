@@ -1,38 +1,56 @@
 [
   {
-   "Comment": "Parameter \"node\" has the same name as its type. This causes the godocs to stutter. Consider removing the name of the return parameter.",
-   "Filename": "effective-go/named-result-params/example.go",
-   "Line": 11,
-   "Snippet": "}\n\nfunc (n *Node) Parent1() (node *Node)\nfunc (n *Node) Parent2() (node *Node, err error)"
+   "Comment": "Parameter `err` has the same name as its type `error`. This causes the godocs to stutter. Consider removing the name of the return parameter.",
+   "Filename": "code-review-comments/named-result-params/example.go",
+   "Line": 16,
+   "Snippet": "\n// Parent2 is an example function\nfunc (n *Node) Parent2() (node *Node, err error) {}\n\nfunc (h *ClientHandler) handle(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) (result interface{}, err error) {}"
   },
   {
-   "Comment": "Parameter \"node\" has the same name as its type. This causes the godocs to stutter. Consider removing the name of the return parameter.",
-   "Filename": "effective-go/named-result-params/example.go",
-   "Line": 11,
-   "Snippet": "}\n\nfunc (n *Node) Parent1() (node *Node)\nfunc (n *Node) Parent2() (node *Node, err error)"
+   "Comment": "Parameter `err` has the same name as its type `err`. This causes the godocs to stutter. Consider removing the name of the return parameter.",
+   "Filename": "code-review-comments/named-result-params/example.go",
+   "Line": 16,
+   "Snippet": "\n// Parent2 is an example function\nfunc (n *Node) Parent2() (node *Node, err error) {}\n\nfunc (h *ClientHandler) handle(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) (result interface{}, err error) {}"
   },
   {
-   "Comment": "Parameter \"err\" has the same name as its type. This causes the godocs to stutter. Consider removing the name of the return parameter.",
-   "Filename": "effective-go/named-result-params/example.go",
-   "Line": 12,
-   "Snippet": "\nfunc (n *Node) Parent1() (node *Node)\nfunc (n *Node) Parent2() (node *Node, err error)\n"
+   "Comment": "Parameter `node` has the same name as its type `Node`. This causes the godocs to stutter. Consider removing the name of the return parameter.",
+   "Filename": "code-review-comments/named-result-params/example.go",
+   "Line": 16,
+   "Snippet": "\n// Parent2 is an example function\nfunc (n *Node) Parent2() (node *Node, err error) {}\n\nfunc (h *ClientHandler) handle(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) (result interface{}, err error) {}"
   },
   {
-   "Comment": "Parameter \"err\" has the same name as its type. This causes the godocs to stutter. Consider removing the name of the return parameter.",
-   "Filename": "effective-go/named-result-params/example.go",
-   "Line": 12,
-   "Snippet": "\nfunc (n *Node) Parent1() (node *Node)\nfunc (n *Node) Parent2() (node *Node, err error)\n"
+   "Comment": "Parameter `node` has the same name as its type `node`. This causes the godocs to stutter. Consider removing the name of the return parameter.",
+   "Filename": "code-review-comments/named-result-params/example.go",
+   "Line": 16,
+   "Snippet": "\n// Parent2 is an example function\nfunc (n *Node) Parent2() (node *Node, err error) {}\n\nfunc (h *ClientHandler) handle(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) (result interface{}, err error) {}"
   },
   {
-   "Comment": "Parameter \"node\" has the same name as its type. This causes the godocs to stutter. Consider removing the name of the return parameter.",
-   "Filename": "effective-go/named-result-params/example.go",
-   "Line": 12,
-   "Snippet": "\nfunc (n *Node) Parent1() (node *Node)\nfunc (n *Node) Parent2() (node *Node, err error)\n"
+   "Comment": "Parameter `node` has the same name as its type `node`. This causes the godocs to stutter. Consider removing the name of the return parameter.",
+   "Filename": "code-review-comments/named-result-params/example.go",
+   "Line": 13,
+   "Snippet": "\n// Parent1 is an example function\nfunc (n *Node) Parent1() (node *Node) {}\n\n// Parent2 is an example function"
   },
   {
-   "Comment": "Parameter \"node\" has the same name as its type. This causes the godocs to stutter. Consider removing the name of the return parameter.",
-   "Filename": "effective-go/named-result-params/example.go",
-   "Line": 12,
-   "Snippet": "\nfunc (n *Node) Parent1() (node *Node)\nfunc (n *Node) Parent2() (node *Node, err error)\n"
+   "Comment": "Parameter `node` has the same name as its type `Node`. This causes the godocs to stutter. Consider removing the name of the return parameter.",
+   "Filename": "code-review-comments/named-result-params/example.go",
+   "Line": 13,
+   "Snippet": "\n// Parent1 is an example function\nfunc (n *Node) Parent1() (node *Node) {}\n\n// Parent2 is an example function"
+  },
+  {
+   "Comment": "Parameter `result` has the same name as its type `result`. This causes the godocs to stutter. Consider removing the name of the return parameter.",
+   "Filename": "code-review-comments/named-result-params/example.go",
+   "Line": 18,
+   "Snippet": "func (n *Node) Parent2() (node *Node, err error) {}\n\nfunc (h *ClientHandler) handle(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) (result interface{}, err error) {}\n"
+  },
+  {
+   "Comment": "Parameter `err` has the same name as its type `error`. This causes the godocs to stutter. Consider removing the name of the return parameter.",
+   "Filename": "code-review-comments/named-result-params/example.go",
+   "Line": 18,
+   "Snippet": "func (n *Node) Parent2() (node *Node, err error) {}\n\nfunc (h *ClientHandler) handle(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) (result interface{}, err error) {}\n"
+  },
+  {
+   "Comment": "Parameter `err` has the same name as its type `err`. This causes the godocs to stutter. Consider removing the name of the return parameter.",
+   "Filename": "code-review-comments/named-result-params/example.go",
+   "Line": 18,
+   "Snippet": "func (n *Node) Parent2() (node *Node, err error) {}\n\nfunc (h *ClientHandler) handle(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) (result interface{}, err error) {}\n"
   }
  ]

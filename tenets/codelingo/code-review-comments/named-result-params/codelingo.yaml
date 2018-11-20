@@ -6,6 +6,7 @@ funcs:
         if (a === "err" && b === "error") {
           return true
         }
+        console.log("Can I log?")
         return a.toLowerCase() === b.toLowerCase()
       }
 tenets:
@@ -16,34 +17,14 @@ tenets:
     query: |
       import codelingo/ast/go
 
-      go.file(depth = any):
-        go.decls:
+      go.func_type(depth = any):
+        go.field_list:
+          sibling_order == 1
           @review comment
-          go.func_decl:
-            go.ident
-            go.func_type:
-              go.field_list
-              go.field_list:
-                go.field(depth = 0:1):
-                  child_count == 2
-                  go.names:
-                    go.ident:
-                      name as paramName
-                  # any_of:
-                  go.star_expr:
-                    go.selector_expr:
-                      child_count == 1
-                      go.ident(depth = 0:2):
-                        name as identName
-                        isEqual(paramName, identName)
-                        exclude:
-                          go.names:
-                            go.ident
-
-                    
-                    # go.ident:
-                    #   name as identName
-                    #   isEqual(paramName, identName)
-                    #   exclude: 
-                    #     go.names:
-                    #       go.ident
+          go.field:
+            go.names:
+              go.ident:
+                name as paramName
+            go.ident(depth = 0:2):
+              name as identName
+              isEqual(paramName, identName)
