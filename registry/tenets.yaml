@@ -180,6 +180,12 @@ codelingo:
         hasIssues: false
     tags:
       - php
+  psr1:
+    description: Best practices for PHP from PSR-1.
+    version: 0.0.0
+    tenets:
+      camel-case-method-name:
+        hasIssues: false
   west:
     description: Tenets written for West
     version: 0.0.0
