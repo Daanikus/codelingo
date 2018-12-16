@@ -1,0 +1,24 @@
+funcs:
+  - name: beginsWithCapital
+    type: asserter
+    body: |
+      function(name) {
+        return name.charAt(0) >= "A" && name.charAt(0) <= "Z"
+      }
+tenets:
+  - name: camel-case-method-name
+    flows:
+      codelingo/docs:
+        title: Camel Case Method Name
+        body: Method names MUST be declared in camelCase
+      codelingo/review:
+        comment: Method names MUST be declared in camelCase
+    query: |
+      import codelingo/ast/php
+
+      php.stmt_class(depth = any):
+        php.stmt_classmethod:
+          @review comment
+          php.identifier:
+            name as methodName
+            beginsWithCapital(methodName)
