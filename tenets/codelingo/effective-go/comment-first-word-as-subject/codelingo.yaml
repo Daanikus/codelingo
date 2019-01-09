@@ -77,18 +77,19 @@ funcs:
           var result = s
           var words = s.split(" ")
         
-          //Split first word into camel-cased subwords
+          // Split first word into camel-cased subwords
           words[0].split(/([A-Z][a-z]*)/).forEach(function(word) {
             if (word.length < 4) return
             // If start of comment smells like an old name
-            if (lc(word).indexOf(lc(name)) !== -1) {
+            if (lc(word).indexOf(lc(name)) !== -1 ||
+                lc(name).indexOf(lc(word)) !== -1) {
               words[0] = name
             }
           })
           return words.join(" ")
         }
         
-        var verbs = ["test", "ensure", "replace", "get",
+        var verbs = ["test", "ensure", "replace", "get", "start"
                      "validate", "demonstrate", "compare",
                      "declare", "check", "retrieve", "render"];
         var nouns = ["test", "function", "method"];
@@ -120,8 +121,8 @@ funcs:
           s = updateOld(s, name)
           s = s.replace(new RegExp("^" + name + "[a-z]* ?", "i"), "")    // Remove name from start including extra alphas and space if exists
           s = fixLeadingVerb(s)
-          s = s.replace(new RegExp("^[a-z]+([A-Z]+[a-z]+)+ "), "") // Remove leading camelCase
-          s = s.replace(new RegExp("^([A-Z]+[a-z]+){2,} "), "")    // Remove leading PascalCase. Must come after remove name
+          s = s.replace(new RegExp("^[a-z]+([A-Z]+[a-z]+)+ "), "")       // Remove leading camelCase
+          s = s.replace(new RegExp("^([A-Z]+[a-z]+){2,} "), "")          // Remove leading PascalCase. Must come after remove name
           s = s.replace(new RegExp("^This( example)? ", "i"), "")
           s = prependChecksACase(s, name, verbs)
           s = s.replace(new RegExp("^Purpose ", "i"), "The purpose ")
