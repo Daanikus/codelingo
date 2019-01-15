@@ -1,0 +1,72 @@
+funcs:
+  - name: isInvalidErrName
+    type: asserter
+    body: |
+      function (a) {
+        var dot = a.charAt(a.length - 1) === '.'
+        var cap = a.charAt(0) >= "A" && a.charAt(0) <= "Z"
+        return dot || cap
+      }
+  - name: isTestFile
+    type: asserter
+    body: |
+      function(fName) {
+        var testExt = "_test.go"
+        return fName.slice(fName.length - testExt.length) === "_test.go"
+      }
+  - name: fixErrorFormat
+    type: resolver
+    body: |
+      function(text) {
+        function escapeGoFormat(text) {
+          return text.replace(new RegExp("([\\\"])", "g"), "\\$1")
+        }
+        
+        function surroundWithQuotes(text) {
+          return "\"" + text + "\""
+        }
+        
+        function uncapitalizeFirstLetter(text) {
+          return text.charAt(0).toLowerCase() + text.slice(1);
+        }
+
+        function removeTrailingPunctuation(text) {
+          var re = /[.;:!? ]/
+          while (re.exec(text.charAt(text.length - 1))) {
+            text = text.substring(0, text.length - 1)
+          }
+          return text
+        }
+
+        return surroundWithQuotes(escapeGoFormat(uncapitalizeFirstLetter(removeTrailingPunctuation(text)))) 
+      }
+tenets:
+  - name: find-funcs
+    flows:
+      codelingo/review:
+        comment: |
+          Error strings should not be capitalized (unless beginning with proper nouns 
+          or acronyms) or end with punctuation, since they are usually printed following
+          other context.
+      codelingo/rewrite:
+    query: |
+      import codelingo/ast/go
+      go.file(depth = any):
+        filename as fName
+        isTestFile(fName)
+        go.assign_stmt(depth = any):
+          go.lhs:
+            go.ident:
+              name == "testcases"
+          go.rhs:
+            go.composite_lit:
+              go.elts:
+                go.composite_lit:
+                  go.elts:
+                    go.key_value_expr:
+                      go.ident:
+                        name == "expectedErrorMessage"
+                      @rewrite --replace "{{fixErrorFormat(strValue)}}"
+                      @review comment
+                      go.basic_lit:
+                        value as strValue

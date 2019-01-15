@@ -1,0 +1,76 @@
+funcs:
+  - name: isInvalidErrName
+    type: asserter
+    body: |
+      function (a) {
+        var dot = a.charAt(a.length - 1) === '.'
+        var cap = a.charAt(0) >= "A" && a.charAt(0) <= "Z"
+        return dot || cap
+      }
+  - name: isTestFile
+    type: asserter
+    body: |
+      function(fName) {
+        return fName.slice(fName.length - 8) === "_test.go"
+      }
+  - name: fixErrorFormat
+    type: resolver
+    body: |
+      function(text) {
+        function escapeGoFormat(text) {
+          return text.replace(new RegExp("([\\\"])", "g"), "\\$1")
+        }
+        
+        function surroundWithQuotes(text) {
+          return "\"" + text + "\""
+        }
+        
+        function uncapitalizeFirstLetter(text) {
+          return text.charAt(0).toLowerCase() + text.slice(1);
+        }
+
+        function removeTrailingPunctuation(text) {
+          var re = /[.;:!? ]/
+          while (re.exec(text.charAt(text.length - 1))) {
+            text = text.substring(0, text.length - 1)
+          }
+          return text
+        }
+
+        return surroundWithQuotes(escapeGoFormat(uncapitalizeFirstLetter(removeTrailingPunctuation(text)))) 
+      } 
+tenets:
+  - name: find-funcs
+    flows:
+      codelingo/review:
+        comment: |
+          Error strings should not be capitalized (unless beginning with proper nouns 
+          or acronyms) or end with punctuation, since they are usually printed following
+          other context.
+      codelingo/rewrite:
+    query: |
+      import codelingo/ast/go
+      go.file(depth = any):
+        filename as fName
+        isTestFile(fName)
+        go.call_expr(depth = any):
+          go.selector_expr:  
+            go.ident:
+              name == "assert"
+            go.ident:
+              name == "Equal"
+          go.args: 
+            @review comment
+            @rewrite --replace "{{fixErrorFormat(strValue)}}"
+            go.basic_lit:
+              sibling_order == 1
+              kind == "string"
+              value as strValue
+              isInvalidErrName(strValue)
+            go.call_expr:
+              sibling_order == 2
+              go.selector_expr:
+                go.ident:
+                  name == "err"
+                go.ident:
+                  name == "Error"
