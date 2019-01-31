@@ -87,11 +87,9 @@ func (s *cmdSuite) TestNewFileSRC(c *gc.C) {
 	}
 }
 
-var oldSRC string = `
+var oldSRC = `
 package test
-
 func main() {
-
 }
 `[1:]
 
@@ -103,334 +101,309 @@ var testData = []struct {
 	{
 		decOpts: "rewrite \"<NEW CODE>\"",
 		comment: &comment{
-			Line:    2,
-			Content: "func <ALT CODE>() {",
+			Line:     2,
+			Content:  "func <ALT CODE>() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func <NEW CODE>() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite name",
 		comment: &comment{
-			Line:    2,
-			Content: "func <ALT CODE>() {",
+			Line:     2,
+			Content:  "func <ALT CODE>() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func <NEW CODE>() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --replace name",
 		comment: &comment{
-			Line:    2,
-			Content: "func <ALT CODE>() {",
+			Line:     2,
+			Content:  "func <ALT CODE>() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func <NEW CODE>() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --replace --start-to-end-offset name",
 		comment: &comment{
-			Line:    2,
-			Content: "func <ALT CODE>() {",
+			Line:     2,
+			Content:  "func <ALT CODE>() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func <NEW CODE>() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-to-end-offset name",
 		comment: &comment{
-			Line:    2,
-			Content: "func <ALT CODE>() {",
+			Line:     2,
+			Content:  "func <ALT CODE>() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func <NEW CODE>() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-offset name",
 		comment: &comment{
-			Line:    2,
-			Content: "func <ALT CODE>ain() {",
+			Line:     2,
+			Content:  "func <ALT CODE>ain() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func <NEW CODE>ain() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --line name",
 		comment: &comment{
-			Line:    2,
-			Content: "<ALT CODE>",
+			Line:     2,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 <NEW CODE>
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-offset --line name",
 		comment: &comment{
-			Line:    2,
-			Content: "<ALT CODE>",
+			Line:     2,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 <NEW CODE>
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --end-offset --line name",
 		comment: &comment{
-			Line:    2,
-			Content: "<ALT CODE>",
+			Line:     2,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 <NEW CODE>
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-to-end-offset --prepend name",
 		comment: &comment{
-			Line:    2,
-			Content: "func <ALT CODE>main() {",
+			Line:     2,
+			Content:  "func <ALT CODE>main() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func <NEW CODE>main() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-offset --prepend name",
 		comment: &comment{
-			Line:    2,
-			Content: "func <ALT CODE>main() {",
+			Line:     2,
+			Content:  "func <ALT CODE>main() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func <NEW CODE>main() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --prepend name",
 		comment: &comment{
-			Line:    2,
-			Content: "func <ALT CODE>main() {",
+			Line:     2,
+			Content:  "func <ALT CODE>main() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func <NEW CODE>main() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --end-offset --prepend name",
 		comment: &comment{
-			Line:    2,
-			Content: "func mai<ALT CODE>n() {",
+			Line:     2,
+			Content:  "func mai<ALT CODE>n() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func mai<NEW CODE>n() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --prepend --line name",
 		comment: &comment{
-			Line:    2,
-			Content: "<ALT CODE>",
+			Line:     2,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 <NEW CODE>
 func main() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-to-end-offset --prepend --line name",
 		comment: &comment{
-			Line:    2,
-			Content: "<ALT CODE>",
+			Line:     2,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 <NEW CODE>
 func main() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-offset --prepend --line name",
 		comment: &comment{
-			Line:    2,
-			Content: "<ALT CODE>",
+			Line:     2,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 <NEW CODE>
 func main() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --end-offset --prepend --line name",
 		comment: &comment{
-			Line:    2,
-			Content: "<ALT CODE>",
+			Line:     2,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 <NEW CODE>
 func main() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --append name",
 		comment: &comment{
-			Line:    2,
-			Content: "func main<ALT CODE>() {",
+			Line:     2,
+			Content:  "func main<ALT CODE>() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func main<NEW CODE>() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-to-end-offset --append name",
 		comment: &comment{
-			Line:    2,
-			Content: "func main<ALT CODE>() {",
+			Line:     2,
+			Content:  "func main<ALT CODE>() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func main<NEW CODE>() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-offset --append name",
 		comment: &comment{
-			Line:    2,
-			Content: "func m<ALT CODE>ain() {",
+			Line:     2,
+			Content:  "func m<ALT CODE>ain() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func m<NEW CODE>ain() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --end-offset --append name",
 		comment: &comment{
-			Line:    2,
-			Content: "func main<ALT CODE>() {",
+			Line:     2,
+			Content:  "func main<ALT CODE>() {",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func main<NEW CODE>() {
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --append --line name",
 		comment: &comment{
-			Line:    3,
-			Content: "<ALT CODE>",
+			Line:     3,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func main() {
 <NEW CODE>
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-to-end-offset --append --line name",
 		comment: &comment{
-			Line:    3,
-			Content: "<ALT CODE>",
+			Line:     3,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func main() {
 <NEW CODE>
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --end-offset --append --line name",
 		comment: &comment{
-			Line:    3,
-			Content: "<ALT CODE>",
+			Line:     3,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func main() {
 <NEW CODE>
-
 }
 `[1:]),
 	}, {
 		decOpts: "rewrite --start-offset --append --line name",
 		comment: &comment{
-			Line:    3,
-			Content: "<ALT CODE>",
+			Line:     3,
+			Content:  "<ALT CODE>",
+			Original: "func main() {",
 		},
 		newSRC: []byte(`
 package test
-
 func main() {
 <NEW CODE>
-
 }
 `[1:]),
 	},
