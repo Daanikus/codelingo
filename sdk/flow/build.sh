@@ -40,7 +40,8 @@ echo $v | while IFS=',' read -d';' os arch;  do
 	if [ "$os" == "windows" ]; then
 		fn="$filename.zip"
         rm $binpath/$fn
-		zip $fn cmd.exe
+		# zip $fn cmd.exe
+		zip -9 -y -r -q $fn cmd.exe
         rm cmd.exe
 	else
 		fn="$filename.tar.gz"
